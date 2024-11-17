@@ -86,47 +86,20 @@ public class UnifiedListRankingBenchmark {
         WyllieListGenerator.generateInputFile(inputWyllieFilename, size, 1, 100);
     }
 
-    @TearDown(Level.Iteration)
-    public void teardown() {
-        System.gc();
-    }
-
     // Бенчмарк для алгоритма ExternalMemoryListRanking
-    //@Benchmark
+    @Benchmark
     public void externalMemoryListRankingBenchmark(Blackhole bh) throws IOException {
         LinkedList<Integer> rankedList = new LinkedList<>();
-        /*for (int i=0; i< N; i++) {
-            rankedList = ExternalMemoryListRanking.listRanking(list);
-            ExternalMemoryListRanking.writeListToFile(rankedList, outputExternalFilename);
-            bh.consume(rankedList); // Используем Blackhole, чтобы избежать оптимизаций
-        }*/
+
         rankedList = ExternalMemoryListRanking.listRanking(list);
         ExternalMemoryListRanking.writeListToFile(rankedList, outputExternalFilename);
         bh.consume(rankedList); // Используем Blackhole, чтобы избежать оптимизаций
     }
 
     // Бенчмарк для алгоритма RandomMateListRanking
-    //@Benchmark
+    @Benchmark
     public void randomMateListRankingBenchmark(Blackhole bh) {
-        /*for (int i=0; i< N; i++) {
-            Map<Integer, ru.highloadjava.externalmemorylab.altsolutionrandommate.Node> nodeMap;
-            try {
-                nodeMap = RandomMateListRanking.readNodesFromFile(inputRandomMateFilename);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
 
-            RandomMateListRanking.pointerJumpingPhase();
-            RandomMateListRanking.reconstructionPhase();
-
-            try {
-                RandomMateListRanking.writeRanksToFile(outputRandomMateFilename);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            bh.consume(nodeMap.values());
-        }*/
         Map<Integer, ru.highloadjava.externalmemorylab.altsolutionrandommate.Node> nodeMap;
         try {
             nodeMap = RandomMateListRanking.readNodesFromFile(inputRandomMateFilename);
@@ -149,23 +122,7 @@ public class UnifiedListRankingBenchmark {
     // Бенчмарк для алгоритма WyllieListRanking
     @Benchmark
     public void wyllieListRankingBenchmark(Blackhole bh) {
-        /*for (int i=0; i< N; i++) {
-            LinkedList<ru.highloadjava.externalmemorylab.altsolutionwilley.Node> nodeList = WyllieListRanking.readListFromFile(inputWyllieFilename);
-            ru.highloadjava.externalmemorylab.altsolutionwilley.Node head = nodeList.get(0);
 
-            ConcurrentHashMap<Integer, ru.highloadjava.externalmemorylab.altsolutionwilley.Node> nodeMap = new ConcurrentHashMap<>();
-            for (int j = 0; j < nodeList.size() - 1; j++) {
-                nodeList.get(j).setNext(nodeList.get(j + 1));
-                nodeMap.put(j, nodeList.get(j));
-            }
-            nodeMap.put(nodeList.size() - 1, nodeList.get(nodeList.size() - 1));
-
-            WyllieListRanking.rankList(nodeMap, head);
-
-            WyllieListRanking.writeListToFile(outputWyllieFilename, nodeMap.values());
-
-            bh.consume(nodeMap.values());
-        }*/
         LinkedList<ru.highloadjava.externalmemorylab.altsolutionwilley.Node> nodeList = WyllieListRanking.readListFromFile(inputWyllieFilename);
         ru.highloadjava.externalmemorylab.altsolutionwilley.Node head = nodeList.get(0);
 
