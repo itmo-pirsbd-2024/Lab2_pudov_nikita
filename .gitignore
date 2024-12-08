@@ -1,5 +1,7 @@
 /.idea/
 .gradle
+/gradlew
+/gradlew.bat
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
@@ -41,3 +43,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/gradle/wrapper/gradle-wrapper.jar
+/gradle/wrapper/gradle-wrapper.properties
